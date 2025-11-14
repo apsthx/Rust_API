@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  clinic-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: clinic_api_rust
+    ports:
+      - "8002:8002"
+    environment:
+      - ENV=DEV
+      - API_PORT=:8002
+      - RUST_LOG=clinic_api=debug,tower_http=debug,axum=debug
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - clinic-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: clinic_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PWD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - clinic-network
+    restart: unless-stopped
+
+networks:
+  clinic-network:
+    driver: bridge
+
+volumes:
+  mysql-data:

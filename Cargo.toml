@@ -1,0 +1,79 @@
+[package]
+name = "clinic_api"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Web Framework (equivalent to Gin in Go)
+axum = { version = "0.7", features = ["macros"] }
+tokio = { version = "1", features = ["full"] }
+tower = { version = "0.4", features = ["util"] }
+tower-http = { version = "0.5", features = ["fs", "cors", "trace"] }
+
+# Database & ORM (equivalent to GORM)
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "mysql", "chrono", "uuid"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Authentication & Security
+jsonwebtoken = "9"
+bcrypt = "0.15"
+totp-rs = "5.5" # OTP equivalent
+
+# Environment Variables
+dotenvy = "0.15"
+
+# Date & Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# HTTP Client
+reqwest = { version = "0.11", features = ["json", "multipart"] }
+
+# AWS S3
+aws-config = "1.1"
+aws-sdk-s3 = "1.15"
+
+# Image Processing
+image = "0.24"
+
+# Excel Processing
+rust_xlsxwriter = "0.60"
+
+# Error Handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Validation
+validator = { version = "0.16", features = ["derive"] }
+
+# UUID
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# Email
+lettre = { version = "0.11", features = ["tokio1-native-tls", "smtp-transport"] }
+
+# OAuth2
+oauth2 = "4.4"
+
+# Async utilities
+futures = "0.3"
+
+# Random generation
+rand = "0.8"
+
+# Base64
+base64 = "0.21"
+
+# HTTP client for SMS
+ureq = { version = "2.9", features = ["json"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
